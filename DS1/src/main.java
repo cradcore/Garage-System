@@ -5,8 +5,12 @@
 public class main {
 	
 	public static void main(String[] args) {
-		Gate entryGate = new Gate("entry");
-		Gate exitGate = new Gate("exit");
+		Garage garage = new Garage(50);
+		Gate entryGate = new Gate("entry", garage);
+		Gate exitGate = new Gate("exit", garage);
+		entryGate.startGate();
+		
+	
 	}
 
 }
