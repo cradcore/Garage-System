@@ -49,8 +49,9 @@ public class Ticket {
 	}
 	
 	// Adds the current time to endTime
-	public void closeTicket() {
+	public void closeTicket(double cost) {
 		endTime = new Date();
+		this.cost = cost;
 	}
 	
 	// Updates the total cost of the ticket upon exiting garage

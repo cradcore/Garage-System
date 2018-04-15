@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class TicketDatabase {
@@ -94,11 +95,11 @@ public class TicketDatabase {
 	}
 	
 	// Adds the current time to the end time of the specified ticket and updates cost
-	public void closeTicket(String ID) {
+	public void closeTicket(String ID, double cost) {
 		if (isTicketOpen(ID)) {
 			for(int i = 0; i < tickets.size(); i++) {
 				if(tickets.get(i).getID().equals(ID) && tickets.get(i).getEndTime() == null) {
-					tickets.get(i).closeTicket();
+					tickets.get(i).closeTicket(cost);
 				}
 			}
 		}
@@ -111,7 +112,8 @@ public class TicketDatabase {
 	public void updateTicketPrice(String ID, double price) {
 		for(int i = 0; i < tickets.size(); i++) {
 			if(tickets.get(i).getID().equals(ID)) {
-				double cost = Math.ceil((tickets.get(i).getEndTime().getTime() - tickets.get(i).getStartTime().getTime()) / (1000 * 60) / 60) * price;
+				Date d = new Date();
+				double cost = Math.ceil((d.getTime() - tickets.get(i).getStartTime().getTime()) / (1000 * 60) / 60) * price;
 				if(cost == 0)
 					cost = price;
 				tickets.get(i).updateCost(cost);
