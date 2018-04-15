@@ -7,9 +7,11 @@ public class AdminConsole {
 
 	// Class variables
 	private Garage garage;
+	private ArrayList<Ticket> tickets;
 
 	public AdminConsole(Garage garage) {
 		this.garage = garage;
+		this.tickets = garage.getTicketDatabase().getTickets();
 	}
 
 	// Returns the current occupancy of the garage
@@ -44,7 +46,7 @@ public class AdminConsole {
 
 	// Starts a menu to get total payments for a given time
 	private void paymentInfoMenu(ArrayList<Ticket> t) {
-		System.out.println("Please select an option for viewing payment info:\n[1] By hour\n[2] By day [3] By week [4] By month");
+		System.out.println("Please select an option for viewing payment info:\n[1] By hour\n[2] By day\n[3] By week\n[4] By month");
 		Scanner pimKeyboard = new Scanner(System.in);
 		int choice = pimKeyboard.nextInt();
 		switch(choice) {
@@ -66,7 +68,7 @@ public class AdminConsole {
 
 	// Starts a menu to get total occupancy for a given time
 	private void occupancyInfoMenu(ArrayList<Ticket> t) {
-		System.out.println("Please select an option for viewing payment info:\n[1] By hour\n[2] By day [3] By week [4] By month");
+		System.out.println("Please select an option for viewing payment info:\n[1] By hour\n[2] By day\n[3] By week\n[4] By month");
 		Scanner oimKeyboard = new Scanner(System.in);
 		int choice = oimKeyboard.nextInt();
 		

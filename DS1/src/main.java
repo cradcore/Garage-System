@@ -11,11 +11,16 @@ public class main {
 		Gate entryGate = new Gate("entry", garage);
 		Gate exitGate = new Gate("exit", garage);
 
-		entryGate.startGate();
-		System.out.println("\n\n\n");
-		exitGate.startGate();
+		//entryGate.startGate();
+		//System.out.println("\n\n\n");
+		//exitGate.startGate();
 		
 		System.out.println("Total vehciles in garage: " + garage.getTicketDatabase().getNumOpenTickets());
+		System.out.println();
+		
+		AdminConsole ac = new AdminConsole(garage);
+		ac.DataMenu();
+		
 	}
 
 }

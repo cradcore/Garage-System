@@ -20,6 +20,24 @@ public class Ticket {
 		sdf = new SimpleDateFormat("E M/d/y - hh:mm a");
 	}
 	
+	// Constructor for specifying ID, startTime, endTime, and cost
+	public Ticket(String ID, Date startTime, Date endTime, double cost) {
+		this.ID = ID;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.cost = cost;
+		sdf = new SimpleDateFormat("E M/d/y - hh:mm a");
+	}
+	
+	// Constructor when endTime is not set yet
+	public Ticket(String ID, Date startTime, String endTime, double cost) {
+		this.ID = ID;
+		this.startTime = startTime;
+		this.endTime = null;
+		this.cost = cost;
+		sdf = new SimpleDateFormat("E M/d/y - hh:mm a");
+	}
+	
 	// Returns an 6 digit ID with random numbers
 	private String createID() {
 		String id = "";
@@ -70,6 +88,8 @@ public class Ticket {
 	
 	// Returns end time in String format
 	public String getEndTimeToString() {
+		if (endTime == null)
+			return "";
 		return sdf.format(endTime);
 	}
 	
