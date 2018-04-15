@@ -1,29 +1,5 @@
-<div id="page">
-
-<div id="banner">
-
-<div align="left">[![CS 414 Object Oriented Design](../res_images/cs414_logo.png)](../index.php "Course Homepage") </div>
-
-<div align="right">[![CSU Logo](../res_images/co_state_univ_fr_grn_glow.png)](http://welcome.colostate.edu/ "CSU Welcome Page") </div>
-
-<div id="topTitle">
-
-CS 414 Object Oriented Design
-
-<span>Spring 2018</span>  
-<span>[Computer Science Department](http:://www.cs.colostate.edu)</span>  
-
-<span style="font-style:italic">Project P1, P2, and P3</span>  
-
-</div>
-
-</div>
-
-<div id="navigation"><span class="navMenuItem">[Home](../index.php)</span> <span class="navMenuItem">[Syllabus](../home_syllabus.php)</span> <span class="navMenuItem">[Progress](../home_progress.php)</span> <span class="navMenuItem">[Resources](../home_resources.php)</span> <span class="navMenuItem">[Canvas](http://info.canvas.colostate.edu/)</span></div>
-
-<div id="contents">
-
-<div class="indented">
+Corey Craddock
+CS 414
 
 ### Individual work: Garage Project (3 parts)
 
