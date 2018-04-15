@@ -84,5 +84,9 @@ public class TicketDatabase {
 		return null;
 	}
 
+	// Tickets getter
+	public ArrayList<Ticket> getTickets() {
+		return tickets;
+	}
 
 }
