@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Gate {
@@ -61,14 +62,15 @@ public class Gate {
 			ID = exitKeyboard.nextLine();
 		}
 		double amountOwed = 0;
-		garage.getTicketDatabase().closeTicket(ID);
+		Date d = new Date();
 		Ticket t = garage.getTicketDatabase().getTicket(ID);
-		double minutesStayed = (t.getEndTime().getTime() - t.getStartTime().getTime()) / (1000 * 60);
+		double minutesStayed = (d.getTime() - t.getStartTime().getTime()) / (1000 * 60);
 		amountOwed = Math.ceil(minutesStayed / 60) * garage.getPrice();
 		if (amountOwed == 0)
 			amountOwed = garage.getPrice();
 		garage.getTicketDatabase().updateTicketPrice(ID, amountOwed);
-		System.out.printf("Ticket start time: %s. Ticket end time: %s. Total time stayed: %s minutes\n", t.getEndTimeToString(), t.getStartTimeToString(), minutesStayed);
+		garage.getTicketDatabase().closeTicket(ID, amountOwed);
+		System.out.printf("Ticket start time: %s. Ticket end time: %s. Total time stayed: %s minutes\n", t.getStartTimeToString(), t.getEndTimeToString(), minutesStayed);
 		System.out.printf("The amount owed is $%.2f\nEnter the amount you are putting in: \n", amountOwed);
 		double payment = 0;
 		payment = exitKeyboard.nextDouble();
