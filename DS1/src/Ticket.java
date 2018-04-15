@@ -8,13 +8,15 @@ public class Ticket {
 	private String ID;
 	private Date startTime;
 	private Date endTime;
-	SimpleDateFormat sdf;
+	private double cost;
+	private SimpleDateFormat sdf;
 	
 	// Default constructor
 	public Ticket() {
 		this.ID = createID();
 		startTime = new Date();
 		endTime = null;
+		cost = 0;
 		sdf = new SimpleDateFormat("E M/d/y - hh:mm a");
 	}
 	
@@ -31,6 +33,11 @@ public class Ticket {
 	// Adds the current time to endTime
 	public void closeTicket() {
 		endTime = new Date();
+	}
+	
+	// Updates the total cost of the ticket upon exiting garage
+	public void updateCost(double cost) {
+		this.cost = cost;
 	}
 	
 	// To String
@@ -64,6 +71,11 @@ public class Ticket {
 	// Returns end time in String format
 	public String getEndTimeToString() {
 		return sdf.format(endTime);
+	}
+	
+	// Returns the price if closed, 0 if still open
+	public double getPrice() {
+		return cost;
 	}
 
 }

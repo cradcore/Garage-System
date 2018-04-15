@@ -31,20 +31,10 @@ public class Garage {
 		return ticketPrice;
 	}
 	
-	// Adds a vehicle into the garage system. Returns the number of vehciles in the garage after adding the new vehicle
-	public int addVehicle() {
-		if (isFull())
-			return -1;
-		else {
-			numVehicles++;
-			return numVehicles;
-		}
-	}
-	
 	// Returns ticket database
 	public TicketDatabase getTicketDatabase() {
 		return ticketDatabase;
 	}
 	
-	
+	// 
 }
