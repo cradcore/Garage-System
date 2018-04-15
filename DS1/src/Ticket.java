@@ -8,12 +8,14 @@ public class Ticket {
 	private String ID;
 	private Date startTime;
 	private Date endTime;
+	SimpleDateFormat sdf;
 	
 	// Default constructor
 	public Ticket() {
 		this.ID = createID();
 		startTime = new Date();
 		endTime = null;
+		sdf = new SimpleDateFormat("E M/d/y - hh:mm a");
 	}
 	
 	// Returns an 6 digit ID with random numbers
@@ -26,9 +28,13 @@ public class Ticket {
 		return id;
 	}
 	
+	// Adds the current time to endTime
+	public void closeTicket() {
+		endTime = new Date();
+	}
+	
 	// To String
 	public String toString() {
-		SimpleDateFormat sdf = new SimpleDateFormat("E M/d/y - h:m a");
 		if (endTime == null)
 			return "ID: " + ID + "\nStart time: " + sdf.format(startTime);
 		else 
@@ -50,6 +56,14 @@ public class Ticket {
 		return endTime;
 	}
 
-
+	// Returns start time in String format
+	public String getStartTimeToString() {
+		return sdf.format(startTime);
+	}
+	
+	// Returns end time in String format
+	public String getEndTimeToString() {
+		return sdf.format(endTime);
+	}
 
 }
