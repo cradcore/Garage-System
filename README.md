@@ -98,22 +98,3 @@ Submit via Canvas a zip file containing the following items:
 
 * * *
 
-</div>
-
-</div>
-
-<div id="footer">
-
-<div id="footerLeft">Session Time 0 Secs.  
-Originating IP 75.163.139.98  
-User: [Guest](../ztools/authenticLogin.php)</div>
-
-<div id="footerRight">[![CS Department](../res_images/csBuildingLowerRight.png)](http://www.cs.colostate.edu)</div>
-
-<div id="footerCenter">[Apply to CSU](http://admissions.colostate.edu) | [Contact CSU](http://welcome.colostate.edu/info-contact.aspx) | [Disclaimer](http://welcome.colostate.edu/info-disclaimer.aspx) | [Equal Opportunity](http://welcome.colostate.edu/info-equalop.aspx)  
-Colorado State University, Fort Collins, CO 80523 USA  
-© 2018 Colorado State University</div>
-
-</div>
-
-</div>
