@@ -67,6 +67,7 @@ public class Gate {
 		amountOwed = Math.ceil(minutesStayed / 60) * garage.getPrice();
 		if (amountOwed == 0)
 			amountOwed = garage.getPrice();
+		garage.getTicketDatabase().updateTicketPrice(ID, amountOwed);
 		System.out.printf("Ticket start time: %s. Ticket end time: %s. Total time stayed: %s minutes\n", t.getEndTimeToString(), t.getStartTimeToString(), minutesStayed);
 		System.out.printf("The amount owed is $%.2f\nEnter the amount you are putting in: \n", amountOwed);
 		double payment = 0;

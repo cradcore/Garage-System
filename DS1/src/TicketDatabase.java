@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class TicketDatabase {
 	
 	// Class variables
-	ArrayList<Ticket> tickets;
+	private ArrayList<Ticket> tickets;
 	
 	// Default constructor
 	public TicketDatabase() {
@@ -49,7 +49,7 @@ public class TicketDatabase {
 		return false;
 	}
 	
-	// Adds the current time to the end time of the specified ticket
+	// Adds the current time to the end time of the specified ticket and updates cost
 	public void closeTicket(String ID) {
 		if (isTicketOpen(ID)) {
 			for(int i = 0; i < tickets.size(); i++) {
@@ -62,6 +62,19 @@ public class TicketDatabase {
 		
 	}
 	
+	// Updates the price of the ticket upon leaving the garage
+	public void updateTicketPrice(String ID, double price) {
+		for(int i = 0; i < tickets.size(); i++) {
+			if(tickets.get(i).getID().equals(ID)) {
+				double cost = Math.ceil((tickets.get(i).getEndTime().getTime() - tickets.get(i).getStartTime().getTime()) / (1000 * 60) / 60) * price;
+				if(cost == 0)
+					cost = price;
+				tickets.get(i).updateCost(cost);
+			}
+		}
+		
+	}
+	
 	// Returns the ticket object given the ticket ID
 	public Ticket getTicket(String ID) {
 		for(int i = 0; i < tickets.size(); i++) {
@@ -70,4 +83,6 @@ public class TicketDatabase {
 		}
 		return null;
 	}
+
+
 }
