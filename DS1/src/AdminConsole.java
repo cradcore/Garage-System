@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 // Interface for the admin console
 
-public class AdminConsole {
+public class AdminConsole  {
 
 	// Class variables
 	private Garage garage;
@@ -47,7 +47,6 @@ public class AdminConsole {
 			}
 			else System.out.println("This is not a valid choice. Please enter the number of the option you want to choose");
 		}
-		dataMenuKeyboard.close();
 	}
 
 	// Starts a menu to get total payments for a given time
@@ -123,7 +122,7 @@ public class AdminConsole {
 			}
 			System.out.printf("Total payments for specified hour: $%.2f", pay);
 		}
-		
+
 		// Print occupancy info
 		else {
 			int occNum = 0;
@@ -175,7 +174,7 @@ public class AdminConsole {
 			}
 			System.out.printf("Total payments for specified day: $%.2f", pay);
 		}
-		
+
 		// Print occupancy info
 		else {
 			int occNum = 0;
@@ -227,7 +226,7 @@ public class AdminConsole {
 			}
 			System.out.printf("Total payments for specified month: $%.2f", pay);
 		}
-		
+
 		// Print occupancy info
 		else {
 			int occNum = 0;
@@ -249,10 +248,23 @@ public class AdminConsole {
 		}
 	}
 
+	// Change settings (price and occupancy)
+	public void changeSettings() {
+		System.out.println("Please select an option below:\n[1] Change pricing per hour\n[2] Change max occupancy");
+		Scanner csKeyboard = new Scanner(System.in);
+		int choice = csKeyboard.nextInt();
+		if(choice == 1) {
+			System.out.println("Please enter the new price per hour: ");
+			double price = csKeyboard.nextDouble();
+			garage.updatePrice(price);
+			System.out.printf("Successfully changed price to $%.2f per hour\n", price);
+		}
+		else {
+			System.out.println("Please enter the number of available spots: ");
+			int spots = csKeyboard.nextInt();
+			garage.updateSpots(spots);
+			System.out.println("Succesfully changed number of available spots to " + spots);
 
-
-
-
-
-
+		}
+	}
 }

@@ -40,11 +40,12 @@ public class Gate {
 			System.out.println("Press enter once you have your ticket and the gate will open");
 			entryKeyboard.nextLine();
 			operateGate();
-			System.out.println("Closing in 10 seconds");
-			for (int i = 11; i > 0; i--) {
+			System.out.println("Closing in 5 seconds");
+			for (int i = 6; i > 0; i--) {
 				System.out.print((i - 1) + " ");
-				//try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+				try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 			}
+			System.out.println();
 			operateGate();
 		}
 	}
@@ -70,7 +71,7 @@ public class Gate {
 			amountOwed = garage.getPrice();
 		garage.getTicketDatabase().updateTicketPrice(ID, amountOwed);
 		garage.getTicketDatabase().closeTicket(ID, amountOwed);
-		System.out.printf("Ticket start time: %s. Ticket end time: %s. Total time stayed: %s minutes\n", t.getStartTimeToString(), t.getEndTimeToString(), minutesStayed);
+		System.out.printf("Ticket start time: %s.\nTicket end time: %s.\nTotal time stayed: %s minutes\n", t.getStartTimeToString(), t.getEndTimeToString(), minutesStayed);
 		System.out.printf("The amount owed is $%.2f\nEnter the amount you are putting in: \n", amountOwed);
 		double payment = 0;
 		payment = exitKeyboard.nextDouble();
@@ -92,11 +93,12 @@ public class Gate {
 		exitKeyboard.nextLine();
 		System.out.println("Have a nice day!");
 		operateGate();
-		System.out.println("Closing in 10 seconds");
-		for (int i = 11; i > 0; i--) {
+		System.out.println("Closing in 5 seconds");
+		for (int i = 6; i > 0; i--) {
 			System.out.print((i - 1) + " ");
-			//try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+			try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		}
+		System.out.println();
 		operateGate();	
 	}
 	
