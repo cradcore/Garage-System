@@ -31,10 +31,23 @@ public class Garage {
 		return ticketPrice;
 	}
 	
+	// Updates spots available
+	public void updateSpots(int spots) {
+		numParkingSpots = spots;
+	}
+	
+	// Updates the price per hour
+	public void updatePrice(double price) {
+		ticketPrice = price;
+	}
+	
 	// Returns ticket database
 	public TicketDatabase getTicketDatabase() {
 		return ticketDatabase;
 	}
 	
-	// 
+	// Returns capacity of garage
+	public int getCapacity() {
+		return numParkingSpots;
+	}
 }
