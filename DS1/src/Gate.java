@@ -28,7 +28,7 @@ public class Gate {
 	// Entry gate interface
 	private void startEntryGate() {
 		Scanner entryKeyboard = new Scanner(System.in);
-		if (isGarageFull()) {
+		if (!isGarageFull()) {
 			System.out.println("Garage is full. Please try again later");
 		}
 		else {
