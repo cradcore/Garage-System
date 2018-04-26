@@ -23,7 +23,7 @@ public class Garage {
 	
 	// Checks to see if the garage is full, returns boolean
 	public boolean isFull() {
-		return numParkingSpots == numVehicles;
+		return numParkingSpots >= ticketDatabase.getNumOpenTickets();
 	}
 	
 	// Returns the current ticket price (per hour)
