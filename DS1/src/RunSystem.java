@@ -9,6 +9,10 @@ public class RunSystem {
 		AdminConsole adminConsole = new AdminConsole(garage);
 		boolean keepRunning = true;
 		
+		for(int i = 0; i < 43; i++) {
+			entryGate.startGate();
+		}
+		
 		// Main menu
 		while(keepRunning) {
 			for(int i = 0; i < 50; i++)

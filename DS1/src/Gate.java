@@ -35,15 +35,15 @@ public class Gate {
 			System.out.printf("Garage has availability! Ticket prices are $%.2f per hour\n", garage.getPrice());
 			System.out.println("Don't lose your ticket! You must have it to exit the garage");
 			
-			entryKeyboard.nextLine();
+			//entryKeyboard.nextLine();
 			System.out.println(garage.getTicketDatabase().createTicket());
 			System.out.println("Press enter once you have your ticket and the gate will open");
-			entryKeyboard.nextLine();
+			//entryKeyboard.nextLine();
 			operateGate();
 			System.out.println("Closing in 5 seconds");
 			for (int i = 6; i > 0; i--) {
 				System.out.print((i - 1) + " ");
-				try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+				//try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 			}
 			System.out.println();
 			operateGate();
