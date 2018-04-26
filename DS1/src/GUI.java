@@ -1,17 +1,21 @@
+
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
-import java.awt.Font;
-import javax.swing.SwingConstants;
 import java.awt.Insets;
+import java.awt.Font;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
-import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -19,7 +23,12 @@ import java.awt.event.MouseEvent;
 public class GUI {
 
 	private JFrame frame;
+	private JTextField textField;
+	private ArrayList<JLabel> jlabels;
+	private JComboBox<String> comboBox;
+	private JButton button;
 	private Garage garage;
+	private boolean clickable;
 
 	/**
 	 * Launch the application.
@@ -28,7 +37,7 @@ public class GUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI window = new GUI(new Garage(50));
+					GUI window = new GUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,171 +49,216 @@ public class GUI {
 	/**
 	 * Create the application.
 	 */
-	public GUI(Garage garage) {
+	public GUI() {
+		jlabels = new ArrayList<JLabel>();
+		garage = new Garage(50);
+		clickable = false;
 		initialize();
-		this.garage = garage;
+		welcome();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		ArrayList<JLabel> jlabels = new ArrayList<JLabel>();
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1001, 640);
+		frame.setBounds(100, 100, 1001, 581);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{350, 350, 303, 0};
-		gridBagLayout.rowHeights = new int[]{0, 64, 61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{300, 300, 300};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 		
-		JLabel welcome1 = new JLabel("         Welcome to the parking garage!");
-		welcome1.setFont(new Font("Lato", Font.BOLD, 24));
-		welcome1.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbcWelcome1 = new GridBagConstraints();
-		gbcWelcome1.insets = new Insets(0, 0, 5, 5);
-		gbcWelcome1.gridx = 0;
-		gbcWelcome1.gridy = 2;
-		gbcWelcome1.gridwidth = 3;
-		frame.getContentPane().add(welcome1, gbcWelcome1);
-		jlabels.add(welcome1);
+		JLabel label1 = new JLabel("label1");
+		label1.setFont(new Font("Lato", Font.BOLD, 22));
+		GridBagConstraints gbcLabel1 = new GridBagConstraints();
+		gbcLabel1.insets = new Insets(0, 0, 5, 0);
+		gbcLabel1.gridx = 0;
+		gbcLabel1.gridy = 0;
+		gbcLabel1.gridwidth = 3;
+		frame.getContentPane().add(label1, gbcLabel1);
+		jlabels.add(label1);
 		
-		JLabel welcome2 = new JLabel("");
-		welcome2.setIcon(new ImageIcon(GUI.class.getResource("/Icons/garage-icon.png")));
-		GridBagConstraints gbcWelcome2 = new GridBagConstraints();
-		gbcWelcome2.insets = new Insets(0, 0, 5, 5);
-		gbcWelcome2.gridx = 1;
-		gbcWelcome2.gridy = 3;
-		frame.getContentPane().add(welcome2, gbcWelcome2);
-		jlabels.add(welcome2);
+		JLabel label2 = new JLabel("label2");
+		label2.setFont(new Font("Lato", Font.PLAIN, 18));
+		GridBagConstraints gbcLabel2 = new GridBagConstraints();
+		gbcLabel2.insets = new Insets(0, 0, 5, 0);
+		gbcLabel2.gridx = 0;
+		gbcLabel2.gridy = 1;
+		gbcLabel2.gridwidth = 3;
+		frame.getContentPane().add(label2, gbcLabel2);
+		jlabels.add(label2);
 		
-		JLabel welcome3 = new JLabel("To begin, select an option below:");
-		welcome3.setHorizontalAlignment(SwingConstants.CENTER);
-		welcome3.setFont(new Font("Lato", Font.PLAIN, 16));
-		GridBagConstraints gbcWelcome3 = new GridBagConstraints();
-		gbcWelcome3.insets = new Insets(0, 0, 5, 5);
-		gbcWelcome3.gridx = 1;
-		gbcWelcome3.gridy = 4;
-		frame.getContentPane().add(welcome3, gbcWelcome3);
-		jlabels.add(welcome3);
-		
-		JLabel enter0 = new JLabel("You are entering the garage");
-		enter0.setFont(new Font("Lato", Font.BOLD, 20));
-		GridBagConstraints gbcEnter0 = new GridBagConstraints();
-		gbcEnter0.insets = new Insets(0, 0, 5, 5);
-		gbcEnter0.gridx = 1;
-		gbcEnter0.gridy = 7;
-		frame.getContentPane().add(enter0, gbcEnter0);
-		enter0.setVisible(false);
-		jlabels.add(enter0);
-		
-		JLabel enter1 = new JLabel("Please click the ticket below");
-		enter1.setHorizontalAlignment(SwingConstants.CENTER);
-		enter1.setFont(new Font("Lato", Font.PLAIN, 18));
-		GridBagConstraints gbcEnter1 = new GridBagConstraints();
-		gbcEnter1.insets = new Insets(0, 0, 5, 5);
-		gbcEnter1.gridx = 1;
-		gbcEnter1.gridy = 8;
-		frame.getContentPane().add(enter1, gbcEnter1);
-		enter1.setVisible(false);
-		jlabels.add(enter1);
-		
-		JLabel enter2 = new JLabel("to receive your ticket");
-		enter2.setFont(new Font("Lato", Font.PLAIN, 18));
-		enter2.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbcEnter2 = new GridBagConstraints();
-		gbcEnter2.insets = new Insets(0, 0, 5, 5);
-		gbcEnter2.gridx = 1;
-		gbcEnter2.gridy = 9;
-		frame.getContentPane().add(enter2, gbcEnter2);
-		enter2.setVisible(false);
-		jlabels.add(enter2);
-		
-		JLabel enter3 = new JLabel("");
-		enter3.addMouseListener(new MouseAdapter() {
+		JLabel label3 = new JLabel("label3");
+		label3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				openGate(jlabels);
+				if(clickable)
+					operateGate("open");
 			}
 		});
-		enter3.setIcon(new ImageIcon(GUI.class.getResource("/Icons/woo_icon_ticket.png")));
-		GridBagConstraints gbcEnter3 = new GridBagConstraints();
-		gbcEnter3.insets = new Insets(0, 0, 5, 5);
-		gbcEnter3.gridx = 1;
-		gbcEnter3.gridy = 13;
-		frame.getContentPane().add(enter3, gbcEnter3);
-		enter3.setVisible(false);
-		jlabels.add(enter3);
+		label3.setFont(new Font("Lato", Font.PLAIN, 18));
+		GridBagConstraints gbcLabel3 = new GridBagConstraints();
+		gbcLabel3.insets = new Insets(0, 0, 5, 0);
+		gbcLabel3.gridx = 0;
+		gbcLabel3.gridy = 2;
+		gbcLabel3.gridwidth = 3;
+		frame.getContentPane().add(label3, gbcLabel3);
+		jlabels.add(label3);
 		
-		JLabel enter4 = new JLabel("TICKET NUMBER");
-		enter4.setFont(new Font("Lato", Font.BOLD, 18));
-		GridBagConstraints gbcEnter4 = new GridBagConstraints();
-		gbcEnter4.insets = new Insets(0, 0, 5, 5);
-		gbcEnter4.gridx = 1;
-		gbcEnter4.gridy = 14;
-		frame.getContentPane().add(enter4, gbcEnter4);
-		enter4.setVisible(false);
-		jlabels.add(enter4);
-
-
-		JLabel enter5 = new JLabel("Do not lose this ticket #, otherwise you won't be able to leave the garage!");
-		enter5.setFont(new Font("Lato", Font.PLAIN, 18));
-		GridBagConstraints gbcEnter5 = new GridBagConstraints();
-		gbcEnter5.gridx = 0;
-		gbcEnter5.gridy = 15;
-		gbcEnter5.gridwidth = 3;
-		frame.getContentPane().add(enter5, gbcEnter5);
-		enter5.setVisible(false);
-		jlabels.add(enter5);
+		JLabel label4 = new JLabel("label4");
+		label4.setFont(new Font("Lato", Font.PLAIN, 18));
+		GridBagConstraints gbcLabel4 = new GridBagConstraints();
+		gbcLabel4.insets = new Insets(0, 0, 5, 0);
+		gbcLabel4.gridx = 0;
+		gbcLabel4.gridy = 3;
+		gbcLabel4.gridwidth = 3;
+		frame.getContentPane().add(label4, gbcLabel4);
+		jlabels.add(label4);
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
+		JLabel label5 = new JLabel("label5");
+		label5.setFont(new Font("Lato", Font.PLAIN, 18));
+		GridBagConstraints gbcLabel5 = new GridBagConstraints();
+		gbcLabel5.insets = new Insets(0, 0, 5, 0);
+		gbcLabel5.gridx = 0;
+		gbcLabel5.gridy = 4;
+		gbcLabel5.gridwidth = 3;
+		label5.setVisible(false);
+		frame.getContentPane().add(label5, gbcLabel5);
+		jlabels.add(label5);
+		
+		comboBox = new JComboBox<String>();
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(comboBox.getSelectedIndex() == 1) {
-					comboBox.setVisible(false);
-					enterGarage(jlabels);
+				String option = comboBox.getSelectedItem().toString();
+				if(option.equals("Enter garage")) {
+					enterGarage();
+//					welcome();
 				}
-				else if(comboBox.getSelectedIndex() == 2) {
-					comboBox.setVisible(false);
-					exitGarage(jlabels);
+				else if(option.equals("Exit garage")) {
+					exitGarage();
+//					welcome();
 				}
-				else if(comboBox.getSelectedIndex() == 3) {
-					comboBox.setVisible(false);
-					adminConsole(jlabels);
+				else if(option.equals("Admin console")) {
+					adminConsole();
+//					welcome();
 				}
 			}
 		});
-		comboBox.setFont(new Font("Lato", Font.PLAIN, 18));
 		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"(Select an option)", "Enter garage", "Exit garage", "Admin console"}));
+		comboBox.setFont(new Font("Lato", Font.PLAIN, 18));
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 6;
+		gbc_comboBox.gridy = 5;
 		frame.getContentPane().add(comboBox, gbc_comboBox);
 		
+		textField = new JTextField();
+		textField.setFont(new Font("Lato", Font.PLAIN, 18));
+		GridBagConstraints gbc_textField = new GridBagConstraints();
+		gbc_textField.insets = new Insets(0, 0, 5, 5);
+		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField.gridx = 1;
+		gbc_textField.gridy = 6;
+		textField.setVisible(false);
+		frame.getContentPane().add(textField, gbc_textField);
+		textField.setColumns(10);
+		
+		button = new JButton("button");
+		button.setFont(new Font("Lato", Font.PLAIN, 18));
+		button.setHorizontalAlignment(SwingConstants.LEFT);
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton.gridx = 1;
+		gbc_btnNewButton.gridy = 7;
+		button.setVisible(false);
+		frame.getContentPane().add(button, gbc_btnNewButton);
+		
+		JLabel label6 = new JLabel("label6");
+		label6.setFont(new Font("Lato", Font.PLAIN, 18));
+		GridBagConstraints gbcLabel6 = new GridBagConstraints();
+		gbcLabel6.insets = new Insets(0, 0, 0, 5);
+		gbcLabel6.gridx = 0;
+		gbcLabel6.gridy = 8;
+		gbcLabel6.gridwidth = 3;
+		label6.setVisible(false);
+		frame.getContentPane().add(label6, gbcLabel6);
+		jlabels.add(label6);
 	}
 	
-	private void enterGarage(ArrayList<JLabel> jlabels) {
-		for(int i = 0; i < 3; i++)
-			jlabels.get(i).setVisible(false);
-		for(int i = 3; i < 8; i++)
+	private void welcome() {
+		// Set text and icons
+		resetLabels();
+		jlabels.get(0).setText("Welcome to the parking garage!");
+		jlabels.get(1).setIcon(new ImageIcon(GUI.class.getResource("/Icons/garage-icon.png")));
+		jlabels.get(2).setText("Garage availability: " + garage.getTicketDatabase().getNumOpenTickets() + " out of " + garage.getCapacity() + " spots");
+		if(garage.getTicketDatabase().getNumOpenTickets() >= garage.getCapacity())
+			jlabels.get(3).setText("Garage is currently full.");
+		else jlabels.get(3).setText("Garage has " + (garage.getCapacity() - garage.getTicketDatabase().getNumOpenTickets()) + " spots available!");
+		jlabels.get(4).setText("To begin, select an option below");
+		comboBox.setSelectedIndex(0);
+		
+		// Set visible statuses
+		for(int i = 0; i < 5; i++)
 			jlabels.get(i).setVisible(true);
-		jlabels.get(7).setText("Ticket #" + garage.getTicketDatabase().createTicket().toString().substring(0, 10));
+		for(int i = 5; i < jlabels.size(); i++)
+			jlabels.get(i).setVisible(false);
+		comboBox.setVisible(true);
+		textField.setVisible(false);
+		button.setVisible(false);
 	}
 	
-	private void exitGarage(ArrayList<JLabel> jlabels) {
+	private void enterGarage() {
+		// Set text and icons
+		resetLabels();
+		jlabels.get(0).setText("You are entering the garage");
+		jlabels.get(1).setText("Please \"grab\" your ticket below by clicking the ticket");
+		jlabels.get(2).setIcon(new ImageIcon(GUI.class.getResource("/Icons/ticket-icon.png")));
+		jlabels.get(3).setText("Ticket #" + garage.getTicketDatabase().createTicket().toString().substring(4, 10));
+		jlabels.get(4).setText("Do not lose this ticket # or you will not be able to leave the garage!");
+		
+		// Set visible statuses
+		for(int i = 5; i < jlabels.size(); i++) 
+			jlabels.get(i).setVisible(false);
+		comboBox.setVisible(false);
+		button.setVisible(false);
+		
+		// Open gate
+		clickable = true;
 		
 	}
 	
-	private void adminConsole(ArrayList<JLabel> jlabels) {
+	private void operateGate(String type) {
+		resetLabels();
+		if(type.equals("open")) {
+			
+			
+			
+		}
+		else {
+			
+		}
+		clickable = false;
+	}
+	
+	private void exitGarage() {
+		resetLabels();
 		
 	}
 	
-	private void openGate(ArrayList<JLabel> jlabels) {
+	private void adminConsole() {
+		resetLabels();
 		
+	}
+	
+	private void resetLabels() {
+		for(int i = 0; i < jlabels.size(); i++) {
+			jlabels.get(i).setText(null);
+			jlabels.get(i).setIcon(null);
+		}
 	}
 
 }
