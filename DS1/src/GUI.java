@@ -20,6 +20,12 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class GUI {
 
@@ -261,7 +267,53 @@ public class GUI {
 
 	private void exitGarage() {
 		resetLabels();
+		// Set text and icons
+		jlabels.get(0).setText("Exiting garage");
+		jlabels.get(1).setIcon(new ImageIcon(GUI.class.getResource("/Icons/exit-icon.png")));
+		jlabels.get(2).setText("Thank you for visiting!");
+		jlabels.get(3).setText("Please enter your 6-digit ticket number below");
+		
+		// Set visible statuses
+		for(int i = 0; i < 4; i++)
+			jlabels.get(i).setVisible(true);
+		for(int i = 4; i < jlabels.size(); i++)
+			jlabels.get(i).setVisible(false);
+		textField.setVisible(true);
+		comboBox.setVisible(false);
+		
+		// Get ticket #
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				if(textField.getText().length() == 6)
+					exitInfo(textField.getText());
+			}
+		});
 
+		
+	}
+	
+	private void exitInfo(String id) {
+		if(garage.getTicketDatabase().isTicketOpen(id)) {
+			resetLabels();
+			// Update text
+			Ticket t = garage.getTicketDatabase().getTicket(id);
+			jlabels.get(0).setText("Exiting garage");
+			jlabels.get(1).setText("Start time: " + t.getStartTimeToString());
+			jlabels.get(2).setText("End time: ");
+			
+			
+			// Set visible statuses
+			for(int i = 0; i < 3; i++)
+				jlabels.get(i).setVisible(true);
+			for(int i = 3; i < jlabels.size(); i++)
+				jlabels.get(i).setVisible(false);
+			textField.setVisible(false);
+		}
+		else {
+			jlabels.get(5).setText("Invalid ticket #. Please try again");
+			jlabels.get(5).setVisible(true);
+		}
 	}
 
 	private void adminConsole() {
