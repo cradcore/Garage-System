@@ -82,7 +82,7 @@ public class GUI {
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		frmParkingGarageGui.getContentPane().setLayout(gridBagLayout);
-		
+
 		Home = new JLabel("");
 		Home.addMouseListener(new MouseAdapter() {
 			@Override
@@ -197,16 +197,16 @@ public class GUI {
 		gbc_btnNewButton.gridy = 7;
 		button.setVisible(false);
 		frmParkingGarageGui.getContentPane().add(button, gbc_btnNewButton);
-		
-				JLabel label6 = new JLabel("label6");
-				label6.setFont(new Font("Lato", Font.PLAIN, 18));
-				GridBagConstraints gbcLabel6 = new GridBagConstraints();
-				gbcLabel6.gridx = 0;
-				gbcLabel6.gridy = 9;
-				gbcLabel6.gridwidth = 5;
-				label6.setVisible(false);
-				frmParkingGarageGui.getContentPane().add(label6, gbcLabel6);
-				jlabels.add(label6);
+
+		JLabel label6 = new JLabel("label6");
+		label6.setFont(new Font("Lato", Font.PLAIN, 18));
+		GridBagConstraints gbcLabel6 = new GridBagConstraints();
+		gbcLabel6.gridx = 0;
+		gbcLabel6.gridy = 9;
+		gbcLabel6.gridwidth = 5;
+		label6.setVisible(false);
+		frmParkingGarageGui.getContentPane().add(label6, gbcLabel6);
+		jlabels.add(label6);
 	}
 
 	private void welcome() {	
@@ -365,7 +365,7 @@ public class GUI {
 			textField.setText(null);
 			jlabels.get(5).setText("Please enter how much money you are putting in above");
 			button.setText("Go");
-			button.addActionListener(new ActionListener() {
+			ActionListener bAL = new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					if(checkMoneyData()) {
 						double amountPayed = Double.parseDouble(textField.getText());
@@ -375,6 +375,7 @@ public class GUI {
 							button.setVisible(false);
 							garage.getTicketDatabase().updateDatabase();
 							operateGate("exit", jlabels.get(5).getText());
+							buttonRmAL(this);
 						}
 						else jlabels.get(5).setText(String.format("Please enter at least $%." + 2 + "f. Please try again", t.getPrice()));
 
@@ -383,8 +384,9 @@ public class GUI {
 						jlabels.get(5).setText("Please enter a valid amount (e.g. 4.00)");
 					}
 				}
-			});
+			};
 
+			button.addActionListener(bAL);
 
 			// Set visible statuses
 			for(int i = 0; i < jlabels.size(); i++)
@@ -397,6 +399,9 @@ public class GUI {
 			jlabels.get(5).setVisible(true);
 		}
 	}
+	private void buttonRmAL(ActionListener al) {
+		button.removeActionListener(al);
+	}
 
 	private boolean checkMoneyData() {
 		for(int i = 0; i < textField.getText().length(); i++) {
@@ -405,13 +410,41 @@ public class GUI {
 		}
 		if(textField.getText().length() == 0)
 			return false;
-		
+
 		return true;
 	}
 
 	private void adminConsole() {
 		resetLabels();
+		// Set text and icons
+		jlabels.get(0).setText("Admin console");
+		jlabels.get(1).setText("Please enter the password to login");
+		jlabels.get(2).setText("(For sake of assignment, it doesn't matter what password you enter here, just clock go)");
+		button.setText("Go");
 
+		// Set visible statuses
+		for(int i = 0; i < 3; i++)
+			jlabels.get(i).setVisible(true);
+		for(int i = 3; i < jlabels.size(); i++)
+			jlabels.get(i).setVisible(false);
+		textField.setVisible(true);
+		button.setVisible(true);
+		comboBox.setVisible(false);
+		Home.setVisible(true);
+		
+		// Enter admin console
+		ActionListener abAL = new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				adminConsoleInfo();
+				buttonRmAL(this);
+			}
+		};
+
+		button.addActionListener(abAL);
+	}
+	
+	private void adminConsoleInfo() {
+		System.out.println("ADMIN CONSOLE!!!");
 	}
 
 	private void resetLabels() {
