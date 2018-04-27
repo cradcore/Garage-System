@@ -512,6 +512,7 @@ public class GUI {
 				jlabels.get(4).setText("<html>Please enter the price per hour to change to:<br></center>");
 				jlabels.get(4).setVisible(true);
 				jlabels.get(3).setVisible(false);
+				textField.setText(null);
 				textField.setVisible(true);
 				button.setVisible(true);
 				rmML(this, 2);
@@ -525,6 +526,7 @@ public class GUI {
 				jlabels.get(4).setText("<html>Please enter the number of spots available:<br></center>");
 				jlabels.get(4).setVisible(true);
 				jlabels.get(2).setVisible(false);
+				textField.setText(null);
 				textField.setVisible(true);
 				button.setVisible(true);
 				rmML(this, 3);
@@ -536,8 +538,14 @@ public class GUI {
 			public void actionPerformed(ActionEvent arg0) {
 				// Changing price
 				if(jlabels.get(2).isVisible()) {
+					// If price is not valid
+					if(textField.getText().length() == 0) {
+						jlabels.get(5).setText("Price cannot be blank. Please try again");
+						jlabels.get(5).setVisible(true);
+						textField.setText(null);
+						return;
+					}
 					for(int i = 0; i < textField.getText().length(); i++) {
-						// If price is not valid
 						if(!(Character.isDigit(textField.getText().charAt(i)) || textField.getText().charAt(i) == '.')) {
 							jlabels.get(5).setText("Price not valid. Please try again");
 							jlabels.get(5).setVisible(true);
@@ -545,19 +553,21 @@ public class GUI {
 							return;
 						}
 					}
-
+					// Price is valid
 					garage.updatePrice(Double.parseDouble(textField.getText()));
 					jlabels.get(5).setText("Price updated!");
 					jlabels.get(5).setVisible(true);
-					textField.setText(null);
-					Timer t1 = new Timer(2000, null);
-					t1.setRepeats(false);
-					t1.addActionListener(new ActionListener() {
+					Timer t = new Timer(2000, null);
+					// Show price change confirmation page for 2 seconds, and then go back
+					t.setRepeats(false);
+					t.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
-							
+							settingsScreen();
+							t.removeActionListener(this);
 						}
 					});
-					t1.restart();
+					t.restart();
+					
 					
 				}
 				// Changing spots
