@@ -54,6 +54,20 @@ public class Ticket {
 		this.cost = cost;
 	}
 	
+	public void closeTicketCalculateCost(double costPerHour) {
+		endTime = new Date();
+		double minutesStayed = timeStayed();
+		cost = Math.ceil(minutesStayed / 60) * costPerHour;
+		if (cost == 0)
+			cost = costPerHour;
+	}
+	
+	public double timeStayed() {
+		if(endTime == null)
+			return -1;
+		else return ((getEndTime().getTime() - getStartTime().getTime()) / (1000 * 60));
+	}
+	
 	// Updates the total cost of the ticket upon exiting garage
 	public void updateCost(double cost) {
 		this.cost = cost;
