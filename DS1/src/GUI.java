@@ -83,7 +83,7 @@ public class GUI {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		frmParkingGarageGui.getContentPane().setLayout(gridBagLayout);
 
-		Home = new JLabel("");
+		Home = new JLabel();
 		Home.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -431,7 +431,7 @@ public class GUI {
 		button.setVisible(true);
 		comboBox.setVisible(false);
 		Home.setVisible(true);
-		
+
 		// Enter admin console
 		ActionListener abAL = new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -442,9 +442,178 @@ public class GUI {
 
 		button.addActionListener(abAL);
 	}
-	
+
 	private void adminConsoleInfo() {
-		System.out.println("ADMIN CONSOLE!!!");
+		// Set text and icons
+		jlabels.get(1).setText("<html><center>Please select an option below:<br><br></center></html>");
+		jlabels.get(2).setIcon(new ImageIcon(new ImageIcon(GUI.class.getResource("/Icons/settings-icon.png")).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
+		jlabels.get(2).setText("     (Change settings)");
+		jlabels.get(3).setIcon(new ImageIcon(new ImageIcon(GUI.class.getResource("/Icons/reports-icon.png")).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
+		jlabels.get(3).setText("         (View reports)");
+
+
+		// Set visible statuses
+		for(int i = 0; i < 4; i++) 
+			jlabels.get(i).setVisible(true);
+		for(int i = 4; i < jlabels.size(); i++)
+			jlabels.get(i).setVisible(false);
+		textField.setVisible(false);
+		button.setVisible(false);
+		comboBox.setVisible(false);
+		Home.setVisible(true);
+
+		// Add action listeners
+		MouseAdapter settingsMA = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				settingsScreen();
+				rmML(this, 2);
+			}
+		};
+		jlabels.get(2).addMouseListener(settingsMA);
+
+		MouseAdapter reportsMA = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				reportsScreen();
+				rmML(this, 3);
+			}
+		};
+		jlabels.get(3).addMouseListener(reportsMA);
+	}
+
+	private void rmML(MouseAdapter ml, int jlabelNum) {
+		jlabels.get(jlabelNum).removeMouseListener(ml);
+	}
+
+	private void settingsScreen() {
+		// Set text and icons
+		jlabels.get(0).setText("Settings");
+		jlabels.get(1).setText("<html><center>Please select the setting you would like to change below:<br><br></center></html>");
+		jlabels.get(2).setIcon(new ImageIcon(new ImageIcon(GUI.class.getResource("/Icons/price-icon.png")).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
+		jlabels.get(2).setText("    (Change price per hour)                   ");
+		jlabels.get(3).setIcon(new ImageIcon(new ImageIcon(GUI.class.getResource("/Icons/parking-icon.png")).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
+		jlabels.get(3).setText("    (Change number of spots available)");
+
+		// Set visible statuses
+		for(int i = 0; i < 4; i++) 
+			jlabels.get(i).setVisible(true);
+		for(int i = 4; i < jlabels.size(); i++)
+			jlabels.get(i).setVisible(false);
+		textField.setVisible(false);
+		button.setVisible(false);
+		comboBox.setVisible(false);
+		Home.setVisible(true);
+
+		// Add action listeners
+		MouseAdapter priceMA = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				jlabels.get(4).setText("<html>Please enter the price per hour to change to:<br></center>");
+				jlabels.get(4).setVisible(true);
+				jlabels.get(3).setVisible(false);
+				textField.setText(null);
+				textField.setVisible(true);
+				button.setVisible(true);
+				rmML(this, 2);
+			}
+		};
+		jlabels.get(2).addMouseListener(priceMA);
+
+		MouseAdapter spotsMA = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				jlabels.get(4).setText("<html>Please enter the number of spots available:<br></center>");
+				jlabels.get(4).setVisible(true);
+				jlabels.get(2).setVisible(false);
+				textField.setText(null);
+				textField.setVisible(true);
+				button.setVisible(true);
+				rmML(this, 3);
+			}
+		};
+		jlabels.get(3).addMouseListener(spotsMA);
+
+		ActionListener sAL = new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// Changing price
+				if(jlabels.get(2).isVisible()) {
+					// If price is not valid
+					if(textField.getText().length() == 0) {
+						jlabels.get(5).setText("Price cannot be blank. Please try again");
+						jlabels.get(5).setVisible(true);
+						textField.setText(null);
+						return;
+					}
+					for(int i = 0; i < textField.getText().length(); i++) {
+						if(!(Character.isDigit(textField.getText().charAt(i)) || textField.getText().charAt(i) == '.')) {
+							jlabels.get(5).setText("Price not valid. Please try again");
+							jlabels.get(5).setVisible(true);
+							textField.setText(null);
+							return;
+						}
+					}
+					// Price is valid
+					garage.updatePrice(Double.parseDouble(textField.getText()));
+					jlabels.get(5).setText("Price updated!");
+					jlabels.get(5).setVisible(true);
+					Timer t = new Timer(2000, null);
+					// Show price change confirmation page for 2 seconds, and then go back
+					t.setRepeats(false);
+					t.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							settingsScreen();
+							t.removeActionListener(this);
+						}
+					});
+					t.restart();
+					
+					
+				}
+				// Changing spots
+				else if (jlabels.get(3).isVisible()) {
+					// If number of spots is valid
+					if(textField.getText().length() == 0) {
+						jlabels.get(5).setText("Number of spots can not be blank");
+						jlabels.get(5).setVisible(true);
+						textField.setText(null);
+						return;
+						
+					}
+					for(int i = 0; i < textField.getText().length(); i++) {
+						if(!Character.isDigit(textField.getText().charAt(i))) {
+							jlabels.get(5).setText("Please enter a valid number");
+							jlabels.get(5).setVisible(true);
+							textField.setText(null);
+							return;
+						}
+					}
+					
+					// Price is valid
+					garage.updateSpots(Integer.parseInt(textField.getText()));
+					jlabels.get(5).setText("Number of spots updated!");
+					jlabels.get(5).setVisible(true);
+					Timer t = new Timer(2000, null);
+					// Show price change confirmation page for 2 seconds, and then go back
+					t.setRepeats(false);
+					t.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							settingsScreen();
+							t.removeActionListener(this);
+						}
+					});
+					t.restart();
+					
+				}
+				
+				//settingsScreen();
+				buttonRmAL(this);
+			}
+		};
+		button.addActionListener(sAL);
+	}
+
+	private void reportsScreen() {
 	}
 
 	private void resetLabels() {
