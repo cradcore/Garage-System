@@ -288,6 +288,7 @@ public class GUI {
 			jlabels.get(4).setText(change);
 			jlabels.get(4).setVisible(true);
 			jlabels.get(5).setIcon(new ImageIcon(new ImageIcon(GUI.class.getResource("/Icons/bye.gif")).getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT)));
+			jlabels.get(5).setText(null);
 			jlabels.get(5).setVisible(true);
 			Timer t1 = new Timer(5000, null);
 			t1.setRepeats(false);
@@ -332,7 +333,8 @@ public class GUI {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				if(textField.getText().length() == 6) {
-					textFieldRmKL(this);
+					if(garage.getTicketDatabase().isTicketOpen(textField.getText()))
+						textFieldRmKL(this);
 					exitInfo(textField.getText());
 				}
 				else if(textField.getText().length() < 6) {
@@ -371,6 +373,7 @@ public class GUI {
 							jlabels.get(5).setText(String.format("Total change: $%." + 2 + "f", amountPayed - t.getPrice()));
 							textField.setVisible(false);
 							button.setVisible(false);
+							garage.getTicketDatabase().updateDatabase();
 							operateGate("exit", jlabels.get(5).getText());
 						}
 						else jlabels.get(5).setText(String.format("Please enter at least $%." + 2 + "f. Please try again", t.getPrice()));
@@ -397,9 +400,12 @@ public class GUI {
 
 	private boolean checkMoneyData() {
 		for(int i = 0; i < textField.getText().length(); i++) {
-			if (!Character.isDigit(textField.getText().charAt(i)) && textField.getText().charAt(i) != '.')
+			if (!(Character.isDigit(textField.getText().charAt(i)) || textField.getText().charAt(i) == '.'))
 				return false;
 		}
+		if(textField.getText().length() == 0)
+			return false;
+		
 		return true;
 	}
 

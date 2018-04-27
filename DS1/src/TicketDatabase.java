@@ -135,5 +135,9 @@ public class TicketDatabase {
 	public ArrayList<Ticket> getTickets() {
 		return tickets;
 	}
+	
+	public void updateDatabase() {
+		writeDataToFile(file);
+	}
 
 }
