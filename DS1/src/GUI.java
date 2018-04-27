@@ -572,6 +572,37 @@ public class GUI {
 				}
 				// Changing spots
 				else if (jlabels.get(3).isVisible()) {
+					// If number of spots is valid
+					if(textField.getText().length() == 0) {
+						jlabels.get(5).setText("Number of spots can not be blank");
+						jlabels.get(5).setVisible(true);
+						textField.setText(null);
+						return;
+						
+					}
+					for(int i = 0; i < textField.getText().length(); i++) {
+						if(!Character.isDigit(textField.getText().charAt(i))) {
+							jlabels.get(5).setText("Please enter a valid number");
+							jlabels.get(5).setVisible(true);
+							textField.setText(null);
+							return;
+						}
+					}
+					
+					// Price is valid
+					garage.updateSpots(Integer.parseInt(textField.getText()));
+					jlabels.get(5).setText("Number of spots updated!");
+					jlabels.get(5).setVisible(true);
+					Timer t = new Timer(2000, null);
+					// Show price change confirmation page for 2 seconds, and then go back
+					t.setRepeats(false);
+					t.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							settingsScreen();
+							t.removeActionListener(this);
+						}
+					});
+					t.restart();
 					
 				}
 				
