@@ -39,6 +39,7 @@ public class GUI {
 	private Garage garage;
 	private boolean clickable;
 	private Ticket t;
+	private JLabel Home;
 
 	/**
 	 * Launch the application.
@@ -76,19 +77,34 @@ public class GUI {
 		frmParkingGarageGui.setBounds(100, 100, 1001, 581);
 		frmParkingGarageGui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{375, 167, 50, 325};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{75, 309, 190, 106, 289};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		frmParkingGarageGui.getContentPane().setLayout(gridBagLayout);
+		
+		Home = new JLabel("");
+		Home.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				resetLabels();
+				welcome();
+			}
+		});
+		Home.setIcon(new ImageIcon(new ImageIcon(GUI.class.getResource("/Icons/home-icon.png")).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
+		GridBagConstraints gbcHome = new GridBagConstraints();
+		gbcHome.insets = new Insets(0, 0, 5, 5);
+		gbcHome.gridx = 0;
+		gbcHome.gridy = 0;
+		frmParkingGarageGui.getContentPane().add(Home, gbcHome);
 
 		JLabel label1 = new JLabel("label1");
 		label1.setFont(new Font("Lato", Font.BOLD, 22));
 		GridBagConstraints gbcLabel1 = new GridBagConstraints();
 		gbcLabel1.insets = new Insets(0, 0, 5, 0);
 		gbcLabel1.gridx = 0;
-		gbcLabel1.gridy = 0;
-		gbcLabel1.gridwidth = 4;
+		gbcLabel1.gridy = 1;
+		gbcLabel1.gridwidth = 5;
 		frmParkingGarageGui.getContentPane().add(label1, gbcLabel1);
 		jlabels.add(label1);
 
@@ -97,8 +113,8 @@ public class GUI {
 		GridBagConstraints gbcLabel2 = new GridBagConstraints();
 		gbcLabel2.insets = new Insets(0, 0, 5, 0);
 		gbcLabel2.gridx = 0;
-		gbcLabel2.gridy = 1;
-		gbcLabel2.gridwidth = 4;
+		gbcLabel2.gridy = 2;
+		gbcLabel2.gridwidth = 5;
 		frmParkingGarageGui.getContentPane().add(label2, gbcLabel2);
 		jlabels.add(label2);
 
@@ -114,8 +130,8 @@ public class GUI {
 		GridBagConstraints gbcLabel3 = new GridBagConstraints();
 		gbcLabel3.insets = new Insets(0, 0, 5, 0);
 		gbcLabel3.gridx = 0;
-		gbcLabel3.gridy = 2;
-		gbcLabel3.gridwidth = 4;
+		gbcLabel3.gridy = 3;
+		gbcLabel3.gridwidth = 5;
 		frmParkingGarageGui.getContentPane().add(label3, gbcLabel3);
 		jlabels.add(label3);
 
@@ -124,8 +140,8 @@ public class GUI {
 		GridBagConstraints gbcLabel4 = new GridBagConstraints();
 		gbcLabel4.insets = new Insets(0, 0, 5, 0);
 		gbcLabel4.gridx = 0;
-		gbcLabel4.gridy = 3;
-		gbcLabel4.gridwidth = 4;
+		gbcLabel4.gridy = 4;
+		gbcLabel4.gridwidth = 5;
 		frmParkingGarageGui.getContentPane().add(label4, gbcLabel4);
 		jlabels.add(label4);
 
@@ -134,8 +150,8 @@ public class GUI {
 		GridBagConstraints gbcLabel5 = new GridBagConstraints();
 		gbcLabel5.insets = new Insets(0, 0, 5, 0);
 		gbcLabel5.gridx = 0;
-		gbcLabel5.gridy = 4;
-		gbcLabel5.gridwidth = 4;
+		gbcLabel5.gridy = 5;
+		gbcLabel5.gridwidth = 5;
 		label5.setVisible(false);
 		frmParkingGarageGui.getContentPane().add(label5, gbcLabel5);
 		jlabels.add(label5);
@@ -157,8 +173,8 @@ public class GUI {
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 5;
+		gbc_comboBox.gridx = 2;
+		gbc_comboBox.gridy = 6;
 		frmParkingGarageGui.getContentPane().add(comboBox, gbc_comboBox);
 
 		textField = new JTextField();
@@ -166,31 +182,31 @@ public class GUI {
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 6;
+		gbc_textField.gridx = 2;
+		gbc_textField.gridy = 7;
 		textField.setVisible(false);
 		frmParkingGarageGui.getContentPane().add(textField, gbc_textField);
 		textField.setColumns(10);
-
-		JLabel label6 = new JLabel("label6");
-		label6.setFont(new Font("Lato", Font.PLAIN, 18));
-		GridBagConstraints gbcLabel6 = new GridBagConstraints();
-		gbcLabel6.gridx = 0;
-		gbcLabel6.gridy = 8;
-		gbcLabel6.gridwidth = 4;
-		label6.setVisible(false);
-		frmParkingGarageGui.getContentPane().add(label6, gbcLabel6);
-		jlabels.add(label6);
 
 		button = new JButton("button");
 		button.setFont(new Font("Lato", Font.PLAIN, 18));
 		button.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton.gridx = 2;
-		gbc_btnNewButton.gridy = 6;
+		gbc_btnNewButton.gridx = 3;
+		gbc_btnNewButton.gridy = 7;
 		button.setVisible(false);
 		frmParkingGarageGui.getContentPane().add(button, gbc_btnNewButton);
+		
+				JLabel label6 = new JLabel("label6");
+				label6.setFont(new Font("Lato", Font.PLAIN, 18));
+				GridBagConstraints gbcLabel6 = new GridBagConstraints();
+				gbcLabel6.gridx = 0;
+				gbcLabel6.gridy = 9;
+				gbcLabel6.gridwidth = 5;
+				label6.setVisible(false);
+				frmParkingGarageGui.getContentPane().add(label6, gbcLabel6);
+				jlabels.add(label6);
 	}
 
 	private void welcome() {	
@@ -212,6 +228,7 @@ public class GUI {
 		comboBox.setVisible(true);
 		textField.setVisible(false);
 		button.setVisible(false);
+		Home.setVisible(false);
 	}
 
 	private void enterGarage() {
@@ -229,6 +246,7 @@ public class GUI {
 			jlabels.get(i).setVisible(false);
 		comboBox.setVisible(false);
 		button.setVisible(false);
+		Home.setVisible(false);
 
 		// Open gate
 		clickable = true;
@@ -294,6 +312,7 @@ public class GUI {
 
 	private void exitGarage() {
 		resetLabels();
+		Home.setVisible(true);
 		// Set text and icons
 		jlabels.get(0).setText("Exiting garage");
 		jlabels.get(1).setIcon(new ImageIcon(GUI.class.getResource("/Icons/exit-icon.png")));
@@ -331,6 +350,7 @@ public class GUI {
 	private void exitInfo(String id) {
 		if(garage.getTicketDatabase().isTicketOpen(id)) {
 			resetLabels();
+			Home.setVisible(false);
 
 			// Update text
 			Ticket t = garage.getTicketDatabase().getTicket(id);
