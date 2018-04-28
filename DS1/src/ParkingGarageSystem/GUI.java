@@ -566,6 +566,13 @@ public class GUI {
 		button.setVisible(false);
 		comboBox.setVisible(false);
 		Home.setVisible(true);
+		
+		// Remove old mouse listeners
+		for(int i = 0; i < jlabels.size(); i++) {
+			for (int j = 0; j < jlabels.get(i).getMouseListeners().length; j++) {
+				jlabels.get(i).removeMouseListener(jlabels.get(i).getMouseListeners()[j]);
+			}
+		}
 
 		// Add action listeners
 		MouseAdapter priceMA = new MouseAdapter() {
