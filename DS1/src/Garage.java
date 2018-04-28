@@ -6,6 +6,7 @@ public class Garage {
 	private int numVehicles;
 	private double ticketPrice;
 	private TicketDatabase ticketDatabase;
+	private AdminConsole ac;
 	
 	// Default constructor
 	public Garage(int numParkingSpots) {
@@ -18,6 +19,7 @@ public class Garage {
 		this.ticketPrice = ticketPrice;
 		this.numVehicles = 0;
 		this.ticketDatabase = new TicketDatabase();
+		this.ac = new AdminConsole(this);
 	}
 	
 	
@@ -49,5 +51,10 @@ public class Garage {
 	// Returns capacity of garage
 	public int getCapacity() {
 		return numParkingSpots;
+	}
+	
+	// Returns ac
+	public AdminConsole getAdminConsole() {
+		return ac;
 	}
 }

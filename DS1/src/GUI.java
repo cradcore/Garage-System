@@ -3,6 +3,8 @@ import javax.swing.JFrame;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Font;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -32,6 +35,8 @@ public class GUI {
 	private boolean clickable;
 	private Ticket t;
 	private JLabel Home;
+	private JPanel mainJP;
+	private GridBagConstraints gbcHome;
 
 	/**
 	 * Launch the application.
@@ -74,6 +79,7 @@ public class GUI {
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		frmParkingGarageGui.getContentPane().setLayout(gridBagLayout);
+		mainJP = (JPanel) frmParkingGarageGui.getContentPane();
 
 		Home = new JLabel();
 		Home.addMouseListener(new MouseAdapter() {
@@ -82,11 +88,15 @@ public class GUI {
 				resetLabels();
 				for(int i = 0; i < button.getActionListeners().length; i++)
 					button.removeActionListener(button.getActionListeners()[i]);
+				if(!mainJP.isVisible()) {
+					mainJP.setVisible(true);
+					frmParkingGarageGui.setContentPane(mainJP);
+				}
 				welcome();
 			}
 		});
 		Home.setIcon(new ImageIcon(new ImageIcon(GUI.class.getResource("/Icons/home-icon.png")).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
-		GridBagConstraints gbcHome = new GridBagConstraints();
+		gbcHome = new GridBagConstraints();
 		gbcHome.insets = new Insets(0, 0, 5, 5);
 		gbcHome.gridx = 0;
 		gbcHome.gridy = 0;
@@ -409,6 +419,7 @@ public class GUI {
 			jlabels.get(5).setVisible(true);
 		}
 	}
+	
 	private void buttonRmAL(ActionListener al) {
 		button.removeActionListener(al);
 	}
@@ -626,6 +637,15 @@ public class GUI {
 	}
 
 	private void reportsScreen() {
+		resetLabels();
+		
+		// Set text and icons
+		frmParkingGarageGui.getContentPane().setVisible(false);
+		mainJP = (JPanel) frmParkingGarageGui.getContentPane();
+		test reportScreen = new test(garage);
+		frmParkingGarageGui.setContentPane(reportScreen.getPanel());
+		frmParkingGarageGui.getContentPane().add(Home, gbcHome);
+		
 	}
 
 	private void resetLabels() {

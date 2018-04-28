@@ -267,4 +267,161 @@ public class AdminConsole  {
 
 		}
 	}
+
+	// Hour menu for GUI
+	public String hourMenuGUI(String type, Calendar c) {
+		boolean payment;
+		if (type.equals("payment"))
+			payment = true;
+		else payment = false;
+		//System.out.println("Enter the hour you wold like " + type + " info on. NOTE: You must enter the date in the exact format listed below\nFormat: mm/dd/yyyy hh a\nExample: 4/15/2018 12PM");
+		//Scanner hmKB = new Scanner(System.in);
+		//String d = hmKB.nextLine();
+		//DateFormat f = new SimpleDateFormat("M/d/y hha");
+		//Date date = null;
+		//try {date = f.parse(d);} catch (ParseException e) {System.out.println("Date entered incorrectly. Please try again");e.printStackTrace();}
+		//Calendar c = GregorianCalendar.getInstance();
+		//c.setTime(date);
+		//System.out.println();
+
+		// Print payment info
+		if (payment) {
+			double pay = 0;
+			for(int i = 0; i < tickets.size(); i++) {
+				Date tdEnd = tickets.get(i).getEndTime();
+				Calendar tcEnd = GregorianCalendar.getInstance();
+				if (tdEnd != null)
+					tcEnd.setTime(tdEnd);
+				else continue;
+				if (c.get(Calendar.MONTH) == tcEnd.get(Calendar.MONTH) && c.get(Calendar.DATE) == tcEnd.get(Calendar.DATE) && c.get(Calendar.HOUR) == tcEnd.get(Calendar.HOUR)) 
+					pay += tickets.get(i).getPrice();
+			}
+			return String.format("Total payments for specified hour: $%." + 2 + "f",pay);
+		}
+
+		// Print occupancy info
+		else {
+			int occNum = 0;
+			int endOccNum = 0;
+			for(int i = 0; i < tickets.size(); i++) {
+				Date td = tickets.get(i).getStartTime();
+				Calendar tc = GregorianCalendar.getInstance();
+				Date tdEnd = tickets.get(i).getEndTime();
+				Calendar tcEnd = GregorianCalendar.getInstance();
+				tc.setTime(td);
+				if (tdEnd != null)
+					tcEnd.setTime(tdEnd);
+				if (c.get(Calendar.MONTH) == tc.get(Calendar.MONTH) && c.get(Calendar.DATE) == tc.get(Calendar.DATE) && c.get(Calendar.HOUR) == tc.get(Calendar.HOUR)) 
+					occNum++;
+				if (c.get(Calendar.MONTH) == tcEnd.get(Calendar.MONTH) && c.get(Calendar.DATE) == tcEnd.get(Calendar.DATE) && c.get(Calendar.HOUR) == tcEnd.get(Calendar.HOUR)) 
+					endOccNum++;
+			}
+			return ("Total number of tickets started: " + occNum + " tickets\nTotal number of tickets closed: " + endOccNum + " tickets");
+		}
+	}
+
+	// Day menu
+	public String dayMenuGUI(String type, Calendar c) {
+		boolean payment;
+		if (type.equals("payment"))
+			payment = true;
+		else payment = false;
+		//System.out.println("Enter the day you wold like " + type + " info on. NOTE: You must enter the date in the exact format listed below\nFormat: mm/dd/yyyy\nExample: 4/15/2018");
+		//Scanner hmKB = new Scanner(System.in);
+		//String d = hmKB.nextLine();
+		//DateFormat f = new SimpleDateFormat("M/d/y");
+		//Date date = null;
+		//try {date = f.parse(d);} catch (ParseException e) {System.out.println("Date entered incorrectly. Please try again");e.printStackTrace();}
+		//Calendar c = GregorianCalendar.getInstance();
+		//c.setTime(date);
+		//System.out.println();
+
+		// Print payment info
+		if (payment) {
+			double pay = 0;
+			for(int i = 0; i < tickets.size(); i++) {
+				Date tdEnd = tickets.get(i).getEndTime();
+				Calendar tcEnd = GregorianCalendar.getInstance();
+				if (tdEnd != null)
+					tcEnd.setTime(tdEnd);
+				else continue;
+				if (c.get(Calendar.MONTH) == tcEnd.get(Calendar.MONTH) && c.get(Calendar.DATE) == tcEnd.get(Calendar.DATE)) 
+					pay += tickets.get(i).getPrice();
+			}
+			return String.format("Total payments for specified day: $%." + 2 + "f", pay);
+		}
+
+		// Print occupancy info
+		else {
+			int occNum = 0;
+			int endOccNum = 0;
+			for(int i = 0; i < tickets.size(); i++) {
+				Date td = tickets.get(i).getStartTime();
+				Calendar tc = GregorianCalendar.getInstance();
+				Date tdEnd = tickets.get(i).getEndTime();
+				Calendar tcEnd = GregorianCalendar.getInstance();
+				tc.setTime(td);
+				if (tdEnd != null)
+					tcEnd.setTime(tdEnd);
+				if (c.get(Calendar.MONTH) == tc.get(Calendar.MONTH) && c.get(Calendar.DATE) == tc.get(Calendar.DATE)) 
+					occNum++;
+				if (c.get(Calendar.MONTH) == tcEnd.get(Calendar.MONTH) && c.get(Calendar.DATE) == tcEnd.get(Calendar.DATE)) 
+					endOccNum++;
+			}
+			return ("Total number of tickets started: " + occNum + " tickets\nTotal number of tickets closed: " + endOccNum + " tickets");
+		}
+	}
+
+	// Month menu
+	public String monthMenuGUI(String type, Calendar c) {
+		boolean payment;
+		if (type.equals("payment"))
+			payment = true;
+		else payment = false;
+//		System.out.println("Enter the month you wold like " + type + " info on. NOTE: You must enter the date in the exact format listed below\nFormat: mm/yyyy\nExample: 4/2018");
+//		Scanner hmKB = new Scanner(System.in);
+//		String d = hmKB.nextLine();
+//		DateFormat f = new SimpleDateFormat("M/y");
+//		Date date = null;
+//		try {date = f.parse(d);} catch (ParseException e) {System.out.println("Date entered incorrectly. Please try again");e.printStackTrace();}
+//		Calendar c = GregorianCalendar.getInstance();
+//		c.setTime(date);
+//		System.out.println();
+
+		// Print payment info
+		if (payment) {
+			double pay = 0;
+			for(int i = 0; i < tickets.size(); i++) {
+				Date tdEnd = tickets.get(i).getEndTime();
+				Calendar tcEnd = GregorianCalendar.getInstance();
+				if (tdEnd != null)
+					tcEnd.setTime(tdEnd);
+				else continue;
+				if (c.get(Calendar.MONTH) == tcEnd.get(Calendar.MONTH)) 
+					pay += tickets.get(i).getPrice();
+			}
+			return String.format("Total payments for specified month: $%." + 2 + "f", pay);
+		}
+
+		// Print occupancy info
+		else {
+			int occNum = 0;
+			int endOccNum = 0;
+			for(int i = 0; i < tickets.size(); i++) {
+				Date td = tickets.get(i).getStartTime();
+				Calendar tc = GregorianCalendar.getInstance();
+				Date tdEnd = tickets.get(i).getEndTime();
+				Calendar tcEnd = GregorianCalendar.getInstance();
+				tc.setTime(td);
+				if (tdEnd != null)
+					tcEnd.setTime(tdEnd);
+				if (c.get(Calendar.MONTH) == tc.get(Calendar.MONTH)) 
+					occNum++;
+				if (c.get(Calendar.MONTH) == tcEnd.get(Calendar.MONTH)) 
+					endOccNum++;
+			}
+			return ("Total number of tickets started: " + occNum + " tickets\nTotal number of tickets closed: " + endOccNum + " tickets");
+		}
+	}
+
 }
