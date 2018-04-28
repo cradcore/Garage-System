@@ -1,11 +1,7 @@
-
-
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import java.awt.GridBagLayout;
 import java.awt.Image;
-
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -22,10 +18,6 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -88,6 +80,8 @@ public class GUI {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				resetLabels();
+				for(int i = 0; i < button.getActionListeners().length; i++)
+					button.removeActionListener(button.getActionListeners()[i]);
 				welcome();
 			}
 		});
@@ -119,13 +113,6 @@ public class GUI {
 		jlabels.add(label2);
 
 		JLabel label3 = new JLabel("label3");
-		label3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(clickable)
-					operateGate("enter", null);
-			}
-		});
 		label3.setFont(new Font("Lato", Font.PLAIN, 18));
 		GridBagConstraints gbcLabel3 = new GridBagConstraints();
 		gbcLabel3.insets = new Insets(0, 0, 5, 0);
@@ -250,6 +237,14 @@ public class GUI {
 
 		// Open gate
 		clickable = true;
+		
+		jlabels.get(2).addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(clickable)
+					operateGate("enter", null);
+			}
+		});
 
 	}
 
@@ -258,9 +253,19 @@ public class GUI {
 		if(type.equals("enter")) {
 			// Set text and icons
 			jlabels.get(0).setText("Gate opening...");
-			jlabels.get(1).setText("Start time: " + t.getStartTimeToString());
+			jlabels.get(1).setText("[Start time]: " + t.getStartTimeToString());
 			jlabels.get(2).setText("Gate is opened. Closing in 5 seconds");
 			jlabels.get(3).setIcon(new ImageIcon(GUI.class.getResource("/Icons/lb.gif")));
+			
+			// Set visible statuses
+			textField.setVisible(false);
+			button.setVisible(false);
+			for(int i = 0; i < 4; i++)
+				jlabels.get(i).setVisible(true);
+			for(int i = 4; i < jlabels.size(); i++)
+				jlabels.get(i).setVisible(false);
+			
+			// Run timer
 			Timer t1 = new Timer(5000, null);
 			t1.setRepeats(false);
 			t1.addActionListener(new ActionListener() {
@@ -269,7 +274,6 @@ public class GUI {
 				}
 			});
 			t1.restart();
-			//welcome();
 			Timer t2 = new Timer(6500, null);
 			t2.setRepeats(false);
 			t2.restart();
@@ -286,10 +290,17 @@ public class GUI {
 			jlabels.get(2).setText("Gate is opened. Closing in 5 seconds");
 			jlabels.get(3).setIcon(new ImageIcon(GUI.class.getResource("/Icons/lb.gif")));
 			jlabels.get(4).setText(change);
-			jlabels.get(4).setVisible(true);
 			jlabels.get(5).setIcon(new ImageIcon(new ImageIcon(GUI.class.getResource("/Icons/bye.gif")).getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT)));
 			jlabels.get(5).setText(null);
-			jlabels.get(5).setVisible(true);
+			
+			// Set visibility statuses
+			for(int i = 0; i < 5; i++)
+				jlabels.get(i).setVisible(true);
+			textField.setVisible(false);
+			button.setVisible(false);
+			Home.setVisible(false);
+			
+			// Timer
 			Timer t1 = new Timer(5000, null);
 			t1.setRepeats(false);
 			t1.addActionListener(new ActionListener() {
@@ -298,7 +309,6 @@ public class GUI {
 				}
 			});
 			t1.restart();
-			//welcome();
 			Timer t2 = new Timer(6500, null);
 			t2.setRepeats(false);
 			t2.restart();
@@ -467,7 +477,7 @@ public class GUI {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				settingsScreen();
-				rmML(this, 2);
+				rmML(this);
 			}
 		};
 		jlabels.get(2).addMouseListener(settingsMA);
@@ -476,14 +486,15 @@ public class GUI {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				reportsScreen();
-				rmML(this, 3);
+				rmML(this);
 			}
 		};
 		jlabels.get(3).addMouseListener(reportsMA);
 	}
 
-	private void rmML(MouseAdapter ml, int jlabelNum) {
-		jlabels.get(jlabelNum).removeMouseListener(ml);
+	private void rmML(MouseAdapter ml) {
+		jlabels.get(2).removeMouseListener(ml);
+		jlabels.get(3).removeMouseListener(ml);
 	}
 
 	private void settingsScreen() {
@@ -509,13 +520,13 @@ public class GUI {
 		MouseAdapter priceMA = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				jlabels.get(4).setText("<html>Please enter the price per hour to change to:<br></center>");
+				jlabels.get(4).setText("<html><center>Please enter the price per hour to change to:<br></center></html>");
 				jlabels.get(4).setVisible(true);
 				jlabels.get(3).setVisible(false);
 				textField.setText(null);
 				textField.setVisible(true);
 				button.setVisible(true);
-				rmML(this, 2);
+				rmML(this);
 			}
 		};
 		jlabels.get(2).addMouseListener(priceMA);
@@ -523,13 +534,13 @@ public class GUI {
 		MouseAdapter spotsMA = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				jlabels.get(4).setText("<html>Please enter the number of spots available:<br></center>");
+				jlabels.get(4).setText("<html><center>Please enter the number of spots available:<br></center></html>");
 				jlabels.get(4).setVisible(true);
 				jlabels.get(2).setVisible(false);
 				textField.setText(null);
 				textField.setVisible(true);
 				button.setVisible(true);
-				rmML(this, 3);
+				rmML(this);
 			}
 		};
 		jlabels.get(3).addMouseListener(spotsMA);
@@ -567,6 +578,7 @@ public class GUI {
 						}
 					});
 					t.restart();
+					buttonRmAL(this);
 					
 					
 				}
@@ -589,12 +601,12 @@ public class GUI {
 						}
 					}
 					
-					// Price is valid
+					// Number is valid
 					garage.updateSpots(Integer.parseInt(textField.getText()));
 					jlabels.get(5).setText("Number of spots updated!");
 					jlabels.get(5).setVisible(true);
 					Timer t = new Timer(2000, null);
-					// Show price change confirmation page for 2 seconds, and then go back
+					// Show change confirmation page for 2 seconds, and then go back
 					t.setRepeats(false);
 					t.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
@@ -603,11 +615,11 @@ public class GUI {
 						}
 					});
 					t.restart();
+					buttonRmAL(this);
 					
 				}
 				
 				//settingsScreen();
-				buttonRmAL(this);
 			}
 		};
 		button.addActionListener(sAL);
