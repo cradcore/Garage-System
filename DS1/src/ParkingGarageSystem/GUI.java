@@ -240,9 +240,14 @@ public class GUI {
 		if(garage.getTicketDatabase().getNumOpenTickets() >= garage.getCapacity())
 			jlabels.get(3).setText("Garage is currently full.");
 		else jlabels.get(3).setText("Garage has " + (garage.getCapacity() - garage.getTicketDatabase().getNumOpenTickets()) + " spots available!");
-		jlabels.get(4).setText("<html><br>To begin, select an option below<br><br></html>");
+		jlabels.get(4).setText("To begin, select an option below");
 		comboBox.setSelectedIndex(0);
 		jlabels.get(5).setText(String.format("Ticket price per hour: $%." + 2 + "f", garage.getPrice()));
+		if(garage.isFull() && comboBox.getModel().getSize() == 4) 
+			comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"(Select an option)", "Exit garage", "Admin console"}));
+		else if(!garage.isFull() && comboBox.getModel().getSize() == 3)
+			comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"(Select an option)", "Enter garage", "Exit garage", "Admin console"}));
+
 
 		// Set visible statuses
 		for(int i = 0; i < 6; i++)
@@ -262,6 +267,10 @@ public class GUI {
 					jlabels.get(3).setText("Garage is currently full.");
 				else jlabels.get(3).setText("Garage has " + (garage.getCapacity() - garage.getTicketDatabase().getNumOpenTickets()) + " spots available!");
 				jlabels.get(5).setText(String.format("Ticket price per hour: $%." + 2 + "f", garage.getPrice()));
+				if(garage.isFull() && comboBox.getModel().getSize() == 4) 
+					comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"(Select an option)", "Exit garage", "Admin console"}));
+				else if(!garage.isFull() && comboBox.getModel().getSize() == 3)
+					comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"(Select an option)", "Enter garage", "Exit garage", "Admin console"}));
 			}
 		});
 		timer.start();
