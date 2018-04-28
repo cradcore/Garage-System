@@ -3,6 +3,8 @@ import javax.swing.JFrame;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Font;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -32,6 +35,7 @@ public class GUI {
 	private boolean clickable;
 	private Ticket t;
 	private JLabel Home;
+	private JPanel mainJP;
 
 	/**
 	 * Launch the application.
@@ -409,6 +413,7 @@ public class GUI {
 			jlabels.get(5).setVisible(true);
 		}
 	}
+	
 	private void buttonRmAL(ActionListener al) {
 		button.removeActionListener(al);
 	}
@@ -626,6 +631,38 @@ public class GUI {
 	}
 
 	private void reportsScreen() {
+		resetLabels();
+		
+		// Set text and icons
+		JPanel jp = new JPanel();
+		mainJP = (JPanel) frmParkingGarageGui.getContentPane();
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		jp.setLayout(gridBagLayout);
+		
+		JLabel lblNewLabel = new JLabel("Reports");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Lato", Font.BOLD, 22));
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.gridx = 0;
+		gbc_lblNewLabel.gridy = 0;
+		gbc_lblNewLabel.gridwidth = 5;
+		jp.add(lblNewLabel, gbc_lblNewLabel);
+		frmParkingGarageGui.setContentPane(jp);	
+
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				System.out.println("lsjkfkljsdf");
+				frmParkingGarageGui.setContentPane(mainJP);
+				resetLabels();
+				welcome();
+			}
+		});
+		
 	}
 
 	private void resetLabels() {
