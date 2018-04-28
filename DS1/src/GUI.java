@@ -36,6 +36,7 @@ public class GUI {
 	private Ticket t;
 	private JLabel Home;
 	private JPanel mainJP;
+	private GridBagConstraints gbcHome;
 
 	/**
 	 * Launch the application.
@@ -78,6 +79,7 @@ public class GUI {
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		frmParkingGarageGui.getContentPane().setLayout(gridBagLayout);
+		mainJP = (JPanel) frmParkingGarageGui.getContentPane();
 
 		Home = new JLabel();
 		Home.addMouseListener(new MouseAdapter() {
@@ -86,11 +88,15 @@ public class GUI {
 				resetLabels();
 				for(int i = 0; i < button.getActionListeners().length; i++)
 					button.removeActionListener(button.getActionListeners()[i]);
+				if(!mainJP.isVisible()) {
+					mainJP.setVisible(true);
+					frmParkingGarageGui.setContentPane(mainJP);
+				}
 				welcome();
 			}
 		});
 		Home.setIcon(new ImageIcon(new ImageIcon(GUI.class.getResource("/Icons/home-icon.png")).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
-		GridBagConstraints gbcHome = new GridBagConstraints();
+		gbcHome = new GridBagConstraints();
 		gbcHome.insets = new Insets(0, 0, 5, 5);
 		gbcHome.gridx = 0;
 		gbcHome.gridy = 0;
@@ -634,34 +640,11 @@ public class GUI {
 		resetLabels();
 		
 		// Set text and icons
-		JPanel jp = new JPanel();
+		frmParkingGarageGui.getContentPane().setVisible(false);
 		mainJP = (JPanel) frmParkingGarageGui.getContentPane();
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-		jp.setLayout(gridBagLayout);
-		
-		JLabel lblNewLabel = new JLabel("Reports");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Lato", Font.BOLD, 22));
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.gridx = 0;
-		gbc_lblNewLabel.gridy = 0;
-		gbc_lblNewLabel.gridwidth = 5;
-		jp.add(lblNewLabel, gbc_lblNewLabel);
-		frmParkingGarageGui.setContentPane(jp);	
-
-		lblNewLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				System.out.println("lsjkfkljsdf");
-				frmParkingGarageGui.setContentPane(mainJP);
-				resetLabels();
-				welcome();
-			}
-		});
+		test reportScreen = new test(garage);
+		frmParkingGarageGui.setContentPane(reportScreen.getPanel());
+		frmParkingGarageGui.getContentPane().add(Home, gbcHome);
 		
 	}
 
