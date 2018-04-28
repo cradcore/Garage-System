@@ -1,12 +1,11 @@
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -20,13 +19,12 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class GUI {
 
-	private JFrame frmParkingGarageGui;
+	public JFrame frmParkingGarageGui;
 	private JTextField textField;
 	private ArrayList<JLabel> jlabels;
 	private JComboBox<String> comboBox;
@@ -37,15 +35,32 @@ public class GUI {
 	private JLabel Home;
 	private JPanel mainJP;
 	private GridBagConstraints gbcHome;
+	private Timer timer;
+
+	//	/**
+	//	 * Launch the application.
+	//	 */
+	//	public static void main(String[] args) {
+	//		EventQueue.invokeLater(new Runnable() {
+	//			public void run() {
+	//				try {
+	//					GUI window = new GUI(new Garage(50));
+	//					window.frmParkingGarageGui.setVisible(true);
+	//				} catch (Exception e) {
+	//					e.printStackTrace();
+	//				}
+	//			}
+	//		});
+	//	}
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void register(Garage garage) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI window = new GUI();
+					GUI window = new GUI(garage);
 					window.frmParkingGarageGui.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,10 +72,10 @@ public class GUI {
 	/**
 	 * Create the application.
 	 */
-	public GUI() {
+	public GUI(Garage garage) {
 		jlabels = new ArrayList<JLabel>();
-		garage = new Garage(50);
-		clickable = false;
+		this.garage = garage;
+		clickable = false;		
 		initialize();
 		welcome();
 	}
@@ -157,12 +172,21 @@ public class GUI {
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String option = comboBox.getSelectedItem().toString();
-				if(option.equals("Enter garage"))
+				if(option.equals("Enter garage")) {
+					for(int i = 0; i < timer.getActionListeners().length; i++)
+						timer.removeActionListener(timer.getActionListeners()[i]);
 					enterGarage();
-				else if(option.equals("Exit garage")) 
+				}
+				else if(option.equals("Exit garage"))  {
+					for(int i = 0; i < timer.getActionListeners().length; i++)
+						timer.removeActionListener(timer.getActionListeners()[i]);
 					exitGarage();
-				else if(option.equals("Admin console")) 
+				}
+				else if(option.equals("Admin console"))  {
+					for(int i = 0; i < timer.getActionListeners().length; i++)
+						timer.removeActionListener(timer.getActionListeners()[i]);
 					adminConsole();
+				}
 			}
 		});
 		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"(Select an option)", "Enter garage", "Exit garage", "Admin console"}));
@@ -226,6 +250,21 @@ public class GUI {
 		textField.setVisible(false);
 		button.setVisible(false);
 		Home.setVisible(false);
+
+
+
+		timer = new Timer(1000, null);
+		timer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				jlabels.get(2).setText("Garage availability: " + garage.getTicketDatabase().getNumOpenTickets() + " out of " + garage.getCapacity() + " spots");
+				if(garage.getTicketDatabase().getNumOpenTickets() >= garage.getCapacity())
+					jlabels.get(3).setText("Garage is currently full.");
+				else jlabels.get(3).setText("Garage has " + (garage.getCapacity() - garage.getTicketDatabase().getNumOpenTickets()) + " spots available!");
+				jlabels.get(5).setText(String.format("Ticket price per hour: $%." + 2 + "f", garage.getPrice()));
+			}
+		});
+		timer.start();
+
 	}
 
 	private void enterGarage() {
@@ -247,7 +286,7 @@ public class GUI {
 
 		// Open gate
 		clickable = true;
-		
+
 		jlabels.get(2).addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -266,7 +305,7 @@ public class GUI {
 			jlabels.get(1).setText("[Start time]: " + t.getStartTimeToString());
 			jlabels.get(2).setText("Gate is opened. Closing in 5 seconds");
 			jlabels.get(3).setIcon(new ImageIcon(GUI.class.getResource("/Icons/lb.gif")));
-			
+
 			// Set visible statuses
 			textField.setVisible(false);
 			button.setVisible(false);
@@ -274,7 +313,7 @@ public class GUI {
 				jlabels.get(i).setVisible(true);
 			for(int i = 4; i < jlabels.size(); i++)
 				jlabels.get(i).setVisible(false);
-			
+
 			// Run timer
 			Timer t1 = new Timer(5000, null);
 			t1.setRepeats(false);
@@ -302,14 +341,14 @@ public class GUI {
 			jlabels.get(4).setText(change);
 			jlabels.get(5).setIcon(new ImageIcon(new ImageIcon(GUI.class.getResource("/Icons/bye.gif")).getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT)));
 			jlabels.get(5).setText(null);
-			
+
 			// Set visibility statuses
 			for(int i = 0; i < 5; i++)
 				jlabels.get(i).setVisible(true);
 			textField.setVisible(false);
 			button.setVisible(false);
 			Home.setVisible(false);
-			
+
 			// Timer
 			Timer t1 = new Timer(5000, null);
 			t1.setRepeats(false);
@@ -419,7 +458,7 @@ public class GUI {
 			jlabels.get(5).setVisible(true);
 		}
 	}
-	
+
 	private void buttonRmAL(ActionListener al) {
 		button.removeActionListener(al);
 	}
@@ -590,8 +629,8 @@ public class GUI {
 					});
 					t.restart();
 					buttonRmAL(this);
-					
-					
+
+
 				}
 				// Changing spots
 				else if (jlabels.get(3).isVisible()) {
@@ -601,7 +640,7 @@ public class GUI {
 						jlabels.get(5).setVisible(true);
 						textField.setText(null);
 						return;
-						
+
 					}
 					for(int i = 0; i < textField.getText().length(); i++) {
 						if(!Character.isDigit(textField.getText().charAt(i))) {
@@ -611,7 +650,7 @@ public class GUI {
 							return;
 						}
 					}
-					
+
 					// Number is valid
 					garage.updateSpots(Integer.parseInt(textField.getText()));
 					jlabels.get(5).setText("Number of spots updated!");
@@ -627,9 +666,9 @@ public class GUI {
 					});
 					t.restart();
 					buttonRmAL(this);
-					
+
 				}
-				
+
 				//settingsScreen();
 			}
 		};
@@ -638,14 +677,14 @@ public class GUI {
 
 	private void reportsScreen() {
 		resetLabels();
-		
+
 		// Set text and icons
 		frmParkingGarageGui.getContentPane().setVisible(false);
 		mainJP = (JPanel) frmParkingGarageGui.getContentPane();
-		test reportScreen = new test(garage);
+		Report reportScreen = new Report(garage);
 		frmParkingGarageGui.setContentPane(reportScreen.getPanel());
 		frmParkingGarageGui.getContentPane().add(Home, gbcHome);
-		
+
 	}
 
 	private void resetLabels() {

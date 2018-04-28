@@ -23,7 +23,7 @@ import java.beans.VetoableChangeListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-public class test {
+public class Report {
 
 	private ArrayList<JLabel> jlabels;
 	private ArrayList<JRadioButton> radios;
@@ -32,26 +32,26 @@ public class test {
 	private JTextField textField;
 	private Garage g;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					test window = new test(new Garage(50));
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					Report window = new Report(new Garage(50));
+//					window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the application.
 	 */
-	public test(Garage g) {
+	public Report(Garage g) {
 		jlabels = new ArrayList<JLabel>();
 		radios = new ArrayList<JRadioButton>();
 		this.g = g;
