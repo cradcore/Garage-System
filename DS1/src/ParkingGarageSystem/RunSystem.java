@@ -1,3 +1,4 @@
+package ParkingGarageSystem;
 import java.util.Scanner;
 
 public class RunSystem {

@@ -1,3 +1,4 @@
+package ParkingGarageSystem;
 import javax.swing.JFrame;
 import java.awt.GridBagLayout;
 import java.awt.Image;

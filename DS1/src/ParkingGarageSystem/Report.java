@@ -1,3 +1,4 @@
+package ParkingGarageSystem;
 import java.awt.Container;
 import java.awt.EventQueue;
 import javax.swing.ButtonGroup;
@@ -32,21 +33,21 @@ public class Report {
 	private JTextField textField;
 	private Garage g;
 
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					Report window = new Report(new Garage(50));
-//					window.frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	/**
+	 * Launch the application.
+	 */
+	/*public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Report window = new Report(new Garage(50));
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}*/
 
 	/**
 	 * Create the application.
