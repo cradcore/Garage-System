@@ -261,7 +261,7 @@ public class Report {
 		jlabels.add(label5);
 		
 		JLabel label6 = new JLabel("REPORT RESULTS");
-		label6.setFont(new Font("Lato", Font.PLAIN, 18));
+		label6.setFont(new Font("Lato", Font.PLAIN, 16));
 		GridBagConstraints gbcLabel6 = new GridBagConstraints();
 		gbcLabel6.insets = new Insets(0, 0, 0, 5);
 		gbcLabel6.gridx = 1;
@@ -330,12 +330,30 @@ public class Report {
 		if(radios.get(0).isSelected())
 			type = "occupancy";
 		else type = "payment";
-		if(radios.get(2).isSelected())
-			jlabels.get(5).setText(g.getAdminConsole().monthMenuGUI(type, jdc.getCalendar()));
-		else if(radios.get(3).isSelected())
-			jlabels.get(5).setText(g.getAdminConsole().dayMenuGUI(type, jdc.getCalendar()));
-		else if(radios.get(4).isSelected())
-			jlabels.get(5).setText(g.getAdminConsole().hourMenuGUI(type, jdc.getCalendar()));
+		if(radios.get(2).isSelected()) {
+			String s = g.getAdminConsole().monthMenuGUI(type, jdc.getCalendar());
+			for(int i = 0; i < s.length(); i++)
+				if(s.charAt(i) == '\n')
+					s = "<html><nobr>" + s.substring(0, i) + "</nobr><br><nobr>" + s.substring(i + 1) + "</nobr></html>";
+			jlabels.get(5).setText(s);
+					
+		}
+		else if(radios.get(3).isSelected()) {
+			String s = g.getAdminConsole().dayMenuGUI(type, jdc.getCalendar());
+			for(int i = 0; i < s.length(); i++)
+				if(s.charAt(i) == '\n')
+					s = "<html><nobr>" + s.substring(0, i) + "</nobr><br><nobr>" + s.substring(i + 1) + "</nobr></html>";
+			jlabels.get(5).setText(s);
+			
+		}
+		else if(radios.get(4).isSelected()) {
+			String s = g.getAdminConsole().hourMenuGUI(type, jdc.getCalendar());
+			for(int i = 0; i < s.length(); i++)
+				if(s.charAt(i) == '\n')
+					s = "<html><nobr>" + s.substring(0, i) + "</nobr><br><nobr>" + s.substring(i + 1) + "</nobr></html>";
+			jlabels.get(5).setText(s);
+			
+		}
 		else jlabels.get(5).setText("ERROR");
 		jlabels.get(5).setVisible(true);
 	}
